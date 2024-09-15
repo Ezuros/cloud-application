@@ -64,7 +64,13 @@ const redirectIfNotLoggedIn = (req, res, next) => {
 
 // Rota de registro
 app.post('/api/register', async (req, res) => {
-    const { name, email, address, password } = req.body;
+    const { name, email, address, password, role } = req.body;
+
+    // Verifica se o papel (role) é válido
+    if (!['donor', 'collector'].includes(role)) {
+        return res.status(400).json({ success: false, message: 'Tipo de usuário inválido' });
+    }
+
     try {
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -72,7 +78,7 @@ app.post('/api/register', async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ name, email, address, password: hashedPassword });
+        const newUser = new User({ name, email, address, password: hashedPassword, role });
         await newUser.save();
         res.status(201).json({ success: true, message: 'Usuário registrado com sucesso!' });
     } catch (error) {
@@ -80,6 +86,9 @@ app.post('/api/register', async (req, res) => {
         res.status(500).json({ success: false, message: 'Erro ao registrar usuário' });
     }
 });
+
+
+
 
 // Rota de login com JWT
 app.post('/api/login', async (req, res) => {
