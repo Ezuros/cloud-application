@@ -92,7 +92,7 @@ app.post('/api/register', async (req, res) => {
 
 // Rota de login com JWT
 app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body; // Incluindo 'role' na desestruturação
     try {
         const user = await User.findOne({ email });
         if (!user) {
@@ -104,6 +104,11 @@ app.post('/api/login', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Senha incorreta' });
         }
 
+        // Verificar se o papel do usuário corresponde ao papel informado na solicitação
+        if (user.role !== role) {
+            return res.status(403).json({ success: false, message: 'Role inválido' });
+        }
+
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
         res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'None', secure: true });
@@ -113,6 +118,7 @@ app.post('/api/login', async (req, res) => {
         res.status(500).json({ success: false, message: 'Erro ao fazer login' });
     }
 });
+
 
 
 // Rota de logout
