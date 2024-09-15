@@ -29,19 +29,19 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Middleware para verificar o token
 const authenticateToken = (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.cookies.token || req.headers['authorization']?.split(' ')[1];
     if (!token) return res.status(401).json({ success: false, message: 'Acesso negado' });
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) return res.status(403).json({ success: false, message: 'Token inválido' });
-        req.user = user;
+        req.user = user; // O ID do usuário deve estar aqui
         next();
     });
 };
 
 // Middleware para redirecionar usuários logados da página de login para o perfil
 const redirectIfLoggedIn = (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.cookies.token || req.headers['authorization']?.split(' ')[1];
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, (err) => {
             if (!err) return res.redirect('/profile.html');
@@ -54,7 +54,7 @@ const redirectIfLoggedIn = (req, res, next) => {
 
 // Middleware para redirecionar usuários não autenticados da página de perfil para a página de login
 const redirectIfNotLoggedIn = (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.cookies.token || req.headers['authorization']?.split(' ')[1];
     if (!token) return res.redirect('/');
     jwt.verify(token, process.env.JWT_SECRET, (err) => {
         if (err) return res.redirect('/');
@@ -87,9 +87,6 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
-
-
-
 // Rota de login com JWT
 app.post('/api/login', async (req, res) => {
     const { email, password, role } = req.body; // Incluindo 'role' na desestruturação
@@ -106,10 +103,11 @@ app.post('/api/login', async (req, res) => {
 
         // Verificar se o papel do usuário corresponde ao papel informado na solicitação
         if (user.role !== role) {
-            return res.status(403).json({ success: false, message: 'Role inválido' });
+            return res.status(403).json({ success: false, message: 'Tipo de usuário errado' });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        // Incluindo o ID do usuário no payload do token
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
         res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'None', secure: true });
         res.json({ success: true, token });
@@ -118,8 +116,6 @@ app.post('/api/login', async (req, res) => {
         res.status(500).json({ success: false, message: 'Erro ao fazer login' });
     }
 });
-
-
 
 // Rota de logout
 app.post('/api/logout', (req, res) => {
