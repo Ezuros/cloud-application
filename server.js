@@ -7,9 +7,6 @@ const cookieParser = require('cookie-parser');
 const path = require('path'); // Importar path para servir arquivos estáticos
 const app = express();
 const User = require('./models/User');
-const session = require('express-session'); // Importar express-session
-
-
 require('dotenv').config();
 
 // Configuração do CORS
@@ -21,14 +18,6 @@ app.use(cors({
 // Configurar o parser de JSON e cookies
 app.use(express.json());
 app.use(cookieParser());
-
-// Configuração do express-session (Se necessário)
-app.use(session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true, sameSite: 'None' }
-}));
 
 // Conectar ao MongoDB
 mongoose.connect(process.env.MONGO_URI, {
