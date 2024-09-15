@@ -19,6 +19,14 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+// Configuração do express-session (Se necessário)
+app.use(session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true, sameSite: 'None' }
+}));
+
 // Conectar ao MongoDB
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -113,6 +121,7 @@ app.post('/api/login', async (req, res) => {
         res.status(500).json({ success: false, message: 'Erro ao fazer login' });
     }
 });
+
 
 // Rota de logout
 app.post('/api/logout', (req, res) => {
