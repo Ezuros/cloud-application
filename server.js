@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 const path = require('path'); // Importar path para servir arquivos estáticos
 const app = express();
 const User = require('./models/User');
+const session = require('express-session'); // Importar express-session
+
+
 require('dotenv').config();
 
 // Configuração do CORS
