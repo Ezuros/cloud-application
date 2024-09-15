@@ -17,8 +17,13 @@ const UserSchema = new mongoose.Schema({
     address: {
         type: String,
         required: true
+    },
+    role: {
+        type: String,
+        enum: ['donor', 'collector'],  // Define que o usuário pode ser doador ou coletor
+        required: true
     }
-});
+}, { timestamps: true }); // Adiciona timestamps para 'createdAt' e 'updatedAt'
 
 const User = mongoose.model('User', UserSchema);
 
