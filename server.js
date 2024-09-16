@@ -138,8 +138,6 @@ app.post('/api/collectionpoint', async (req, res) => {
 
 
 
-
-
 // Rota de login com JWT
 app.post('/api/login', async (req, res) => {
     const { email, password, role } = req.body; 
