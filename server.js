@@ -87,6 +87,21 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
+// Rota de registro de ponto de coleta
+app.post('/api/collectionpoint', async (req, res) => {
+    const { userId, name, contact, adress, material } = req.body;
+
+
+    try {
+        const newCollectionPoint = new User({ userId, name, contact, adress, material });
+        await newCollectionPoint.save();
+        res.status(201).json({ success: true, message: 'Seu ponto de coleta foi registrado com sucesso!' });
+    } catch (error) {
+        console.error('Erro ao registrar o ponto de coleta:', error);
+        res.status(500).json({ success: false, message: 'Erro ao registrar o ponto de coleta' });
+    }
+});
+
 // Rota de login com JWT
 app.post('/api/login', async (req, res) => {
     const { email, password, role } = req.body; // Incluindo 'role' na desestruturação
