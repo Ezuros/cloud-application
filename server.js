@@ -87,7 +87,7 @@ app.post('/api/register', async (req, res) => {
         res.status(500).json({ success: false, message: 'Erro ao registrar usuário' });
     }
 });
-app.post('/api/collectionpoint', async (req, res) => {
+/* app.post('/api/collectionpoint', async (req, res) => {
     const { userId, name, contact, email, address, material } = req.body;
 
     try {
@@ -119,9 +119,9 @@ app.post('/api/collectionpoint', async (req, res) => {
         res.status(500).json({ success: false, message: 'Erro ao registrar o ponto de coleta' });
     }
 });
+ */
 
-
-/* app.post('/api/collectionpoint', async (req, res) => {
+app.post('/api/collectionpoint', async (req, res) => {
     const { userId, name, contact, email, address, material } = req.body;
 
 
@@ -133,7 +133,7 @@ app.post('/api/collectionpoint', async (req, res) => {
         console.error('Erro ao registrar o ponto de coleta:', error);
         res.status(500).json({ success: false, message: 'Erro ao registrar o ponto de coleta' });
     }
-}); */
+});
 
 // Rota de login com JWT
 app.post('/api/login', async (req, res) => {
