@@ -90,11 +90,11 @@ app.post('/api/register', async (req, res) => {
 
 // Rota de registro de ponto de coleta
 app.post('/api/collectionpoint', async (req, res) => {
-    const { userId, name, contact, adress, material } = req.body;
+    const { userId, name, contact, address, material } = req.body;
 
 
     try {
-        const newCollectionPoint = new CollectionPoint({ userId, name, contact, adress, material });
+        const newCollectionPoint = new CollectionPoint({ userId, name, contact, address, material });
         await newCollectionPoint.save();
         res.status(201).json({ success: true, message: 'Seu ponto de coleta foi registrado com sucesso!' });
     } catch (error) {
