@@ -121,7 +121,7 @@ app.post('/api/register', async (req, res) => {
 }); */
 
 
-/* app.post('/api/collectionpoint', async (req, res) => {
+app.post('/api/collectionpoint', async (req, res) => {
     const { userId, name, contact, email, address, material } = req.body;
 
 
@@ -133,45 +133,9 @@ app.post('/api/register', async (req, res) => {
         console.error('Erro ao registrar o ponto de coleta:', error);
         res.status(500).json({ success: false, message: 'Erro ao registrar o ponto de coleta' });
     }
-}); */
-
-app.post('/api/collectionpoint', async (req, res) => {
-    const { userId, name, contact, email, address, material } = req.body;
-
-    try {
-        // Verificar se o usuário existe na coleção Users
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ success: false, message: 'Usuário não encontrado.' });
-        }
-
-        // Verificar se já existe um documento de ponto de coleta para este userId
-        let collectionPoint = await CollectionPoint.findOne({ userId });
-
-        if (collectionPoint) {
-            // Se o documento já existe, garantir que o array 'points' esteja definido
-            if (!collectionPoint.points) {
-                collectionPoint.points = [];
-            }
-            // Adicionar o novo ponto ao array `points`
-            collectionPoint.points.push({ name, contact, email, address, material });
-        } else {
-            // Se não existe, criar um novo documento com o array de pontos
-            collectionPoint = new CollectionPoint({
-                userId: user._id,
-                points: [{ name, contact, email, address, material }]
-            });
-        }
-
-        // Salvar o documento atualizado
-        await collectionPoint.save();
-
-        res.status(201).json({ success: true, message: 'Ponto de coleta registrado com sucesso!' });
-    } catch (error) {
-        console.error('Erro ao registrar o ponto de coleta:', error);
-        res.status(500).json({ success: false, message: 'Erro ao registrar o ponto de coleta' });
-    }
 });
+
+
 
 
 
