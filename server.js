@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path'); // Importar path para servir arquivos estáticos
 const app = express();
 const User = require('./models/User');
+const CollectionPoint = require('./models/CollectionPoint');
 require('dotenv').config();
 
 // Configuração do CORS
@@ -93,7 +94,7 @@ app.post('/api/collectionpoint', async (req, res) => {
 
 
     try {
-        const newCollectionPoint = new User({ userId, name, contact, adress, material });
+        const newCollectionPoint = new CollectionPoint({ userId, name, contact, adress, material });
         await newCollectionPoint.save();
         res.status(201).json({ success: true, message: 'Seu ponto de coleta foi registrado com sucesso!' });
     } catch (error) {
