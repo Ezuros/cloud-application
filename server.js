@@ -12,7 +12,7 @@ require('dotenv').config();
 
 // Configuração do CORS
 app.use(cors({
-    origin: '*', //Qualquer Origem
+    origin: 'https://cloud-application-git-main-ezuros-projects.vercel.app', //Qualquer Origem
     credentials: true
 }));
 
@@ -105,7 +105,7 @@ app.post('/api/collectionpoint', async (req, res) => {
 
 // Rota de login com JWT
 app.post('/api/login', async (req, res) => {
-    const { email, password, role } = req.body; // Incluindo 'role' na desestruturação
+    const { email, password, role } = req.body; 
     try {
         const user = await User.findOne({ email });
         if (!user) {
