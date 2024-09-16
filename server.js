@@ -12,7 +12,7 @@ require('dotenv').config();
 
 // Configuração do CORS
 app.use(cors({
-    origin: 'https://cloud-application-git-main-ezuros-projects.vercel.app', //Qualquer Origem
+    origin: 'https://733db0db-b1fa-4ae6-a660-5a2f0192a412-00-jecz14r9o8oy.spock.replit.dev', //Qualquer Origem
     credentials: true
 }));
 
