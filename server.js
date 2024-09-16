@@ -118,8 +118,8 @@ app.post('/api/register', async (req, res) => {
         console.error('Erro ao registrar o ponto de coleta:', error);
         res.status(500).json({ success: false, message: 'Erro ao registrar o ponto de coleta' });
     }
-}); */
-
+});
+ */
 
 app.post('/api/collectionpoint', async (req, res) => {
     const { userId, name, contact, email, address, material } = req.body;
@@ -187,6 +187,21 @@ app.get('/api/profile', authenticateToken, async (req, res) => {
         res.status(500).json({ success: false, message: 'Erro ao obter perfil do usuário' });
     }
 });
+
+// Rota para obter dados de todos os coletores
+app.get('/api/allcollectionpoints', authenticateToken, async (req, res) => {
+    try {
+        // Buscar todos os documentos da coleção CollectionPoint
+        const collectionPoints = await CollectionPoint.find();
+
+        // Retornar os pontos de coleta encontrados
+        res.status(200).json({ success: true, collectionPoints });
+    } catch (error) {
+        console.error('Erro ao buscar pontos de coleta:', error);
+        res.status(500).json({ success: false, message: 'Erro ao buscar pontos de coleta' });
+    }
+});
+
 
 // Servir arquivos estáticos da pasta onde os arquivos estão localizados
 app.use(express.static(path.join(__dirname, 'cadastro-usuarios')));

@@ -6,33 +6,28 @@ const CollectionPointSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    
-    collectionInfos: [
-        {
-            name: {
-                type: String,
-                required: true
-            },
-            contact: {
-                type: Number,
-                required: true,
-            },
-        
-            email: {
-                type: String,
-                required: true,
-            },
-           
-            address: {
-                type: String,
-                required: true
-            },
-            material: {
-                type: String,
-                required: true
-            }
-        }
-    ]
+    name: {
+        type: String,
+        required: true
+    },
+    contact: {
+        type: Number,
+        required: true,
+    },
+
+    email: {
+        type: String,
+        required: true,
+    },
+   
+    address: {
+        type: String,
+        required: true
+    },
+    material: {
+        type: String,
+        required: true
+    }
 
 }, { timestamps: true }); // Adiciona timestamps para 'createdAt' e 'updatedAt'
 
