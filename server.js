@@ -175,6 +175,23 @@ app.post('/api/appointment', async (req, res) => {
     }
 });
 
+// Rota para obter dados do usuário
+app.get('/api/allappointments', authenticateToken, async (req, res) => {
+    try {
+        // Busca pelo donorUserId do usuário logado (decodificado do token JWT)
+        const appointments = await Appointment.find({ donorUserId: req.user._id });
+
+        if (appointments.length === 0) {
+            return res.status(404).json({ message: 'Nenhuma coleta encontrada para o usuário.' });
+        }
+
+        // Retorna as coletas encontradas
+        res.json({ appointments });
+    } catch (error) {
+        console.error('Erro ao buscar coletas:', error);
+        res.status(500).json({ message: 'Erro interno do servidor.' });
+    }
+});
 /* app.post('/api/collectionpoint', async (req, res) => {
     const { userId, name, contact, email, address, material } = req.body;
 
