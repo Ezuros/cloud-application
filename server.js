@@ -256,6 +256,27 @@ app.get('/api/allcollectionpoints', authenticateToken, async (req, res) => {
     }
 });
 
+// Rota para obter dados de um ponto de coleta específico
+app.get('/api/collectionpoint/:id', async (req, res) => {
+    const { id } = req.params;  // Captura o ID da URL
+
+    try {
+        // Buscar o ponto de coleta pelo ID
+        const collectionPoint = await CollectionPoint.findById(id);
+
+        // Verificar se o ponto de coleta foi encontrado
+        if (!collectionPoint) {
+            return res.status(404).json({ success: false, message: 'Ponto de coleta não encontrado' });
+        }
+
+        // Retornar o ponto de coleta encontrado
+        res.status(200).json({ success: true, collectionPoint });
+    } catch (error) {
+        console.error('Erro ao buscar o ponto de coleta:', error);
+        res.status(500).json({ success: false, message: 'Erro ao buscar o ponto de coleta' });
+    }
+});
+
 
 app.put('/api/users/:id', async (req, res) => {
     const userId = req.params.id; //Passar id como parâmetro da consulta
