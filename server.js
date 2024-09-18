@@ -176,7 +176,7 @@ app.post('/api/appointment', async (req, res) => {
 });
 
 // Rota para obter dados do usuário
-app.get('/api/allappointments', authenticateToken, async (req, res) => {
+app.get('/api/allappointments', async (req, res) => {
     try {
         const appointments = await Appointment.find();
 
