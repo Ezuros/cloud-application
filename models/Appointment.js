@@ -44,6 +44,6 @@ const AppointmentSchema = new mongoose.Schema({
 
 }, { timestamps: true }); // Adiciona timestamps para 'createdAt' e 'updatedAt'
 
-const Appointment = mongoose.model('Appointments', CollectionPointSchema);
+const Appointment = mongoose.model('Appointment', AppointmentSchema);
 
 module.exports = Appointment;
