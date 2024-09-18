@@ -178,8 +178,7 @@ app.post('/api/appointment', async (req, res) => {
 // Rota para obter dados do usuário
 app.get('/api/allappointments', authenticateToken, async (req, res) => {
     try {
-        // Busca pelo donorUserId do usuário logado (decodificado do token JWT)
-        const appointments = await Appointment.find({ donorUserId: req.user._id });
+        const appointments = await Appointment.find();
 
         if (appointments.length === 0) {
             return res.status(404).json({ message: 'Nenhuma coleta encontrada para o usuário.' });
