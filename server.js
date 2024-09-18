@@ -8,7 +8,7 @@ const path = require('path'); // Importar path para servir arquivos estáticos
 const app = express();
 const User = require('./models/User');
 const CollectionPoint = require('./models/CollectionPoint');
-const Appointment = requirer('./models/Appointment')
+const Appointment = require('./models/Appointment')
 require('dotenv').config();
 
 // Configuração do CORS
