@@ -32,10 +32,6 @@ const AppointmentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    donorContact: {
-        type: String,
-        required: true
-    },
     donorEmail: {
         type: String,
         required: true
