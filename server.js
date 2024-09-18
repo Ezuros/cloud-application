@@ -142,6 +142,37 @@ app.post('/api/logout', (req, res) => {
     res.json({ success: true });
 });
 
+// Rota de registro de vinculo doador - coletor
+app.post('/api/appointment', async (req, res) => {
+    const {  collectorUserId,
+        collectorName,
+        collectorContact,
+        collectorEmail,
+        collectorAddress,
+        donorUserId,
+        donorName,
+        donorContact,
+        donorEmail } = req.body;
+
+
+    try {
+        const newAppointment = new Appointment({ collectorUserId,
+            collectorName,
+            collectorContact,
+            collectorEmail,
+            collectorAddress,
+            donorUserId,
+            donorName,
+            donorContact,
+            donorEmail });
+
+        await newAppointment.save();
+        res.status(201).json({ success: true, message: 'Sua solicitação de coleta foi registrada com sucesso!' });
+    } catch (error) {
+        console.error('Erro ao registrar a solicitação de coleta:', error);
+        res.status(500).json({ success: false, message: 'Erro ao registrar a solicitação de coleta' });
+    }
+});
 
 /* app.post('/api/collectionpoint', async (req, res) => {
     const { userId, name, contact, email, address, material } = req.body;
