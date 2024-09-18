@@ -12,7 +12,7 @@ require('dotenv').config();
 
 // Configuração do CORS
 app.use(cors({
-    origin: 'https://733db0db-b1fa-4ae6-a660-5a2f0192a412-00-jecz14r9o8oy.spock.replit.dev', //Qualquer Origem
+    origin: 'https://22ff14e4-7e09-49ba-a390-f869e91b702e-00-2svojrkn9rkle.janeway.replit.dev', //Qualquer Origem
     credentials: true
 }));
 
