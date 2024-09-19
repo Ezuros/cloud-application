@@ -191,39 +191,7 @@ app.get('/api/allappointments', async (req, res) => {
         res.status(500).json({ message: 'Erro interno do servidor.' });
     }
 });
-/* app.post('/api/collectionpoint', async (req, res) => {
-    const { userId, name, contact, email, address, material } = req.body;
 
-    try {
-        // Encontra o usuário pelo userId
-        const user = await User.findById(userId);
-
-        if (!user) {
-            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
-        }
-
-        // Cria o novo ponto de coleta
-        const newCollectionPoint = {
-            name,
-            contact,
-            email,
-            address,
-            material
-        };
-
-        // Adiciona o novo ponto de coleta ao array de collectionPoints
-        user.collectionPoints.push(newCollectionPoint);
-
-        // Salva as mudanças no banco de dados
-        await user.save();
-
-        res.status(201).json({ success: true, message: 'Seu ponto de coleta foi registrado com sucesso!', collectionPoints: user.collectionPoints });
-    } catch (error) {
-        console.error('Erro ao registrar o ponto de coleta:', error);
-        res.status(500).json({ success: false, message: 'Erro ao registrar o ponto de coleta' });
-    }
-});
- */
 
 //Criar ponto de coleta
 app.post('/api/collectionpoint', async (req, res) => {
